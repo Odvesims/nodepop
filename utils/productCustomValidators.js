@@ -8,7 +8,7 @@ const nameValidations = [
 const priceValidations = [
   {
     validator: (price) => price > 0, 
-    message: 'Price cant be 0'
+    message: 'Price must be greater than 0'
   },
   {
     validator: (price) => isNaN(price) === false,
@@ -25,11 +25,11 @@ const pictureValidations = [
 
 const tagsValidations = [
   {
-    validate: (tag) => tag.length > 0 && tag.length < 5, 
+    validator: (tags) => tags.length > 0 && tags.length < 5, 
     message: 'Product should have between 1-4 tags.'
   },
   {
-    validate: (tag) => tag.every(t => t !== ''),
+    validator: (tag) => tag.every(t => t !== ''),
     message: 'Tag cant be blank'
   },
 ]

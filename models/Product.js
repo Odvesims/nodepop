@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 
-const { nameValidations, priceValidations, pictureValidations, tagsValidations } = require('../utils/productCustomValidators')
+const { nameValidations, priceValidations, pictureValidations, tagsValidations } = require('../utils/')
 
 const productSchema = mongoose.Schema({
   name: {
@@ -26,4 +26,16 @@ const productSchema = mongoose.Schema({
     validate: tagsValidations,
   }
 });
-module.exports = mongoose.model('Product', productSchema)
+
+productSchema.statics.productsList = function(filter, skip, limit, select, sort){
+  const query = Product.find(filter);
+  query.skip(skip);
+  query.limit(limit);
+  query.select(select);
+  query.sort(sort);
+  return query.exec();
+}
+
+const Product = mongoose.model('Product', productSchema);
+
+module.exports = Product

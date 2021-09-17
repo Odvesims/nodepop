@@ -5,9 +5,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 
 var app = express();
+
+//Init DB connection
+require('./lib/database_connection');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -19,8 +21,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+app.locals.title = 'NodePop'
+
+app.use(('/api/products'), require('./routes/api/products'))
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -33,9 +38,15 @@ app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
   res.status(err.status || 500);
-  res.render('error');
+
+  // Send JSON if request was sent to API
+  if(req.url.includes("/api")){
+    res.status(err.status || 500)
+    res.json({ status: 500, error: err.message })
+  } else{
+    res.render('error');
+  }
 });
 
 module.exports = app;
