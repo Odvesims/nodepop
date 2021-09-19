@@ -1,4 +1,5 @@
 'use-strict'
+// Definition of Product model
 
 const mongoose = require('mongoose');
 
@@ -19,13 +20,16 @@ const productSchema = mongoose.Schema({
   },
   for_sale: {
     type: Boolean,
-    default: false
+    default: true
   },
   tags: {
-    type: [String],
+    type: [String], 
+    index: true, 
     validate: tagsValidations,
   }
 });
+
+//Returns a list of products based on the search filters provided
 
 productSchema.statics.productsList = function(filter, skip, limit, select, sort){
   const query = Product.find(filter);
@@ -33,6 +37,13 @@ productSchema.statics.productsList = function(filter, skip, limit, select, sort)
   query.limit(limit);
   query.select(select);
   query.sort(sort);
+  return query.exec();
+}
+
+//Returns a unique list of tags.
+
+productSchema.statics.tagsList = function(){
+  const query = Product.distinct("tags");
   return query.exec();
 }
 

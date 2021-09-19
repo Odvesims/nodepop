@@ -1,3 +1,5 @@
+//Sanitizes the req.query/req.body to return a more legible object.
+
 const sanitizeProductParams = (params) => {
   return {
     name: params.name,

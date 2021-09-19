@@ -1,6 +1,6 @@
-const {nameValidations, priceValidations, pictureValidations, tagsValidations } = require('./productCustomValidators');
-const { sanitizeProductParams } = require('./sanitizeParams');
-const { getPriceRange } = require('./generic_functions');
+const { nameValidations, priceValidations, pictureValidations, tagsValidations } = require('./product_custom_validators');
+const { sanitizeProductParams } = require('./sanitize_params');
+const { getPriceRange, getProductsList } = require('./generic_functions');
 
 module.exports = {
   nameValidations,
@@ -9,4 +9,5 @@ module.exports = {
   tagsValidations,
   sanitizeProductParams,
   getPriceRange,
+  getProductsList,
 }

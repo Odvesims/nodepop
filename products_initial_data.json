@@ -3,21 +3,21 @@
       {
           "name": "Samsung 50'' TV",
           "price": 700.00,
-          "picture": "./public/images/samsung-tv.png",
+          "picture": "/images/samsung-tv.png",
           "tags": ["technology", "entertaiment"],
           "for_sale": true
       },
       {
           "name": "Airpods Pro",
           "price": 190.00,
-          "picture": "./public/images/airpods.png",
+          "picture": "/images/airpods.png",
           "tags": ["technology", "headphones", "apple"],
           "for_sale": true
       },
       {
           "name": "Academy Award",
           "price": 999.99,
-          "picture": "./public/images/oscar.png",
+          "picture": "/images/oscar.png",
           "tags": ["trophies", "luxury", "decorative"],
           "for_sale": false
       }

@@ -1,3 +1,4 @@
+//Validations for product's name property
 const nameValidations = [
   {
     validator: (name) => name.length > 0, 
@@ -5,6 +6,7 @@ const nameValidations = [
   },
 ]
 
+//Validations for product's price property
 const priceValidations = [
   {
     validator: (price) => price > 0, 
@@ -16,13 +18,19 @@ const priceValidations = [
   }
 ]
 
+//Validations for product's picture property
 const pictureValidations = [
   {
-    validator: (picture) => picture.length > 0 , 
+    validator: (picture) => picture.length > 0, 
     message: 'Picture cant be blank'
+  },
+  {
+    validator: (picture) => (/^([A-Za-z0-9\-\/\_\.])+$/).test(picture) === true,
+    message: 'Picture path format is not valid'
   }
 ]
 
+//Validations for product's tags property
 const tagsValidations = [
   {
     validator: (tags) => tags.length > 0 && tags.length < 5, 

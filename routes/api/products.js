@@ -5,10 +5,12 @@ const router = express.Router();
 const Product = require('../../models/Product');
 const { sanitizeProductParams, getPriceRange } = require ('../../utils');
 
-// Get all Products 
+// Get all Products. Accepts query params to filter the desired data.
 
 router.get('/', async (req, res, next) => {
   try {
+    console.log('req', req.query);
+
     const product = sanitizeProductParams(req.query)
     const skip = parseInt(req.query.skip);
     const limit = parseInt(req.query.limit);
@@ -20,9 +22,11 @@ router.get('/', async (req, res, next) => {
     if(product.name) filter.name = new RegExp('^' + product.name, "i");
     if(product.for_sale) filter.for_sale = product.for_sale
     if(product.price) filter.price = getPriceRange(product.price)
-    if(product.tags) filter.tags = product.tags
-    
+    if(product.tags) filter.tags = { $all: product.tags } 
     const products = await Product.productsList(filter, skip, limit, select, sort)
+    if (products.length === 0) {
+      return res.json({message: 'No products match your search criteria'});
+    }
     res.json({result: products})
     
   } catch (err) {
@@ -30,13 +34,25 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+// Gets all unique tags present in the products.
 
-// New Product
+router.get('/tags', async (req, res, next) => {
+  try {
+    const tags = await Product.tagsList()
+    res.json({result: tags})
+    
+  } catch (err) {
+    next(err)
+  }
+});
+
+
+// Inserts a new Product to the database. 
 
 router.post('/', async (req, res, next) => {
   try {
-    const productParams = sanitizeProductParams(req.query);
-    console.log(productParams);
+    const productParams = sanitizeProductParams(req.body);
+    productParams.picture = '/images/' + productParams.picture;
     const product = new Product(productParams);
     const storedProduct = await product.save()
     res.status(201).json({result: storedProduct})
@@ -45,7 +61,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-// Update a Product
+// Updates an existing Product
 
 router.put('/:id', async (req, res, next) => {
   try {
@@ -55,7 +71,7 @@ router.put('/:id', async (req, res, next) => {
       new: true,
     });
     if(!updatedProduct){
-      res.status(404).json({ error: 'Product not found'})
+      res.status(404).json({ error: 'The product couldnt be updated or it was not found'})
       return;
     }   
     res.json({result: updatedProduct})
@@ -64,13 +80,12 @@ router.put('/:id', async (req, res, next) => {
   }
 });
 
-// Remove a Product
+// Removes an existing Product based on its _id.
 
 router.delete('/:id', async (req, res, next) => {
   try {
     const _id = req.params.id;
     const delete_product = await Product.deleteOne({_id: _id});
-    console.log('delete product', delete_product);
     let result_message = `Product with id ${_id} was deleted`;
     if(delete_product.deletedCount == 0) {
       res.status(404);
