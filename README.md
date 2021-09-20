@@ -40,3 +40,5 @@ GET: Para consultar los productos basados en los filtros siguientes:
 POST: Para insertar nuevos productos.
 PUT: Para actualizar un producto existente. Necesitamos el id del producto.
 DELETE: Para eliminar un producto existente. Necesitamos el id del producto.
+
+También podemos hacer un GET request a la ruta api/products/tags para ver un listado de todas las tags que estén presentes en los productos de la DB.
