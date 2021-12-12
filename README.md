@@ -12,7 +12,13 @@ Para inicializar nuestra DB corremos el script db-init con el comando npn run db
 
 `! Aviso, correr este script resultará en la restauración de la base de datos con 3 artículos iniciales eliminando cualquier información adicional `
 
-Luego corremos nuestra app con el comando npm start
+Instanciamos el microservicio para que genere los thumbnail: (Desde el directorio raiz del repo)
+
+`! nodemon microservices/thumbnailGenerator.js `
+
+Luego corremos nuestra app
+
+`! npm start `
 
 # Rutas
 
