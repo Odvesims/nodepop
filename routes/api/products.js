@@ -4,10 +4,20 @@ const express = require('express');
 const router = express.Router();
 const Product = require('../../models/Product');
 const { sanitizeProductParams, getPriceRange } = require('../../utils');
-
+const jwtAuth = require('../../lib/jwtAuthMiddleware');
+const multer = require('multer');
+//const thumbnailRequester = require('../thumbnailRequester');
+/*const storage = multer.diskStorage({
+  destination: './public/images/',
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({ storage: storage });
+*/
 // Get all Products. Accepts query params to filter the desired data.
 
-router.get('/', async (req, res, next) => {
+router.get('/', jwtAuth, async (req, res, next) => {
   try {
     console.log('req', req.query);
 
@@ -52,7 +62,7 @@ router.get('/tags', async (req, res, next) => {
 
 // Inserts a new Product to the database.
 
-router.post('/', async (req, res, next) => {
+router.post('/', jwtAuth, async (req, res, next) => {
   try {
     const productParams = sanitizeProductParams(req.body);
     productParams.picture = '/images/' + productParams.picture;
@@ -66,7 +76,7 @@ router.post('/', async (req, res, next) => {
 
 // Updates an existing Product
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', jwtAuth, async (req, res, next) => {
   try {
     const _id = req.params.id;
     const productParams = sanitizeProductParams(req.body);
@@ -91,7 +101,7 @@ router.put('/:id', async (req, res, next) => {
 
 // Removes an existing Product based on its _id.
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', jwtAuth, async (req, res, next) => {
   try {
     const _id = req.params.id;
     const delete_product = await Product.deleteOne({ _id: _id });
