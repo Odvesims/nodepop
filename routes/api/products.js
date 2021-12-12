@@ -6,15 +6,15 @@ const Product = require('../../models/Product');
 const { sanitizeProductParams, getPriceRange } = require('../../utils');
 const jwtAuth = require('../../lib/jwtAuthMiddleware');
 const multer = require('multer');
-//const thumbnailRequester = require('../thumbnailRequester');
-/*const storage = multer.diskStorage({
+const thumbnailRequester = require('../../utils/thumbnailRequester');
+const storage = multer.diskStorage({
   destination: './public/images/',
   filename: function (req, file, cb) {
     cb(null, file.originalname);
   },
 });
 const upload = multer({ storage: storage });
-*/
+
 // Get all Products. Accepts query params to filter the desired data.
 
 router.get('/', jwtAuth, async (req, res, next) => {
@@ -62,10 +62,13 @@ router.get('/tags', async (req, res, next) => {
 
 // Inserts a new Product to the database.
 
-router.post('/', jwtAuth, async (req, res, next) => {
+router.post('/', jwtAuth, upload.single('picture'), async (req, res, next) => {
   try {
     const productParams = sanitizeProductParams(req.body);
-    productParams.picture = '/images/' + productParams.picture;
+    thumbnailRequester(req.file.originalname);
+    productParams.thumbnail =
+      '/thumbnail-images/thumbnail_' + productParams.picture_name;
+    productParams.picture_name = '/images/' + productParams.picture_name;
     const product = new Product(productParams);
     const storedProduct = await product.save();
     res.status(201).json({ result: storedProduct });

@@ -3,7 +3,7 @@
 <div class="product-item">
   <div class="product-name"><%= product.name %></div>
   <div class="product-picture">
-    <img src="<%= product.picture %>" alt="" />
+    <img src="<%= product.thumbnail || product.picture_name %>" alt="" />
     <span class="for-sale"
       ><%= product.for_sale ? __('Selling') : __('Buying') %></span
     >

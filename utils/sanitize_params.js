@@ -5,8 +5,9 @@ const sanitizeProductParams = (params) => {
     name: params.name,
     price: params.price,
     picture: params.picture,
+    picture_name: params.picture_name,
     tags: params.tags,
     for_sale: params.for_sale,
-  }
-}
+  };
+};
 module.exports = { sanitizeProductParams };
