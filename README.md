@@ -14,11 +14,11 @@ Para inicializar nuestra DB corremos el script db-init con el comando npn run db
 
 Instanciamos el microservicio para que genere los thumbnail: (Desde el directorio raiz del repo)
 
-`! nodemon microservices/thumbnailGenerator.js `
+`nodemon microservices/thumbnailGenerator.js `
 
 Luego corremos nuestra app
 
-`! npm start `
+`npm start `
 
 # Rutas
 
