@@ -1,52 +1,63 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
     <script>
       // Validates price input to only allow numbers and dash
       function validatePriceInput(e) {
-        allowed_keys = [13,48,49,50,51,52,53,54,57,56,57,96,97,98,99,100,101,102,103,104,105,109,189];
-        if(!allowed_keys.includes(parseInt(e.keyCode))){
+        allowed_keys = [
+          13, 48, 49, 50, 51, 52, 53, 54, 57, 56, 57, 96, 97, 98, 99, 100, 101,
+          102, 103, 104, 105, 109, 189,
+        ];
+        if (!allowed_keys.includes(parseInt(e.keyCode))) {
           e.preventDefault();
         }
       }
     </script>
-    <link rel='javascripts' href='/javascripts/products-form.js' />
+    <link rel="javascripts" href="/javascripts/products-form.js" />
     <h1 href="/">Nodepop</h1>
   </head>
   <body>
-    <div class = "search-form">
+    <h1><%= __('Welcome to') %> <%- title %></h1>
+    <div class="search-form">
       <form action="/" method="GET">
-        Name:
-        <input type="text" name="name" placeholder="Name"><br>
-        Price Range:
-        <input type = "text" name="price" placeholder="Price Range" onkeydown="validatePriceInput(event)"><br>
-        Buy/Sell:
+        <%= __('Name') %>:
+        <input type="text" name="name" placeholder="Name" /><br />
+        <%= __('Price Range') %>:
+        <input
+          type="text"
+          name="price"
+          placeholder="<%= __('Price Range') %>"
+          onkeydown="validatePriceInput(event)"
+        /><br />
+        <%= __('Buy/Sell') %>:
         <select name="for_sale" size="auto">
-          <option value="" label="All"></option>
-          <option value="true" label="Selling"></option>
-          <option value="false" label="Buying"></option>
-        </select><br>
-        Tags:
-        <select id="tags" name="tags" size=10 multiple>
+          <option value="" label="<%= __('All') %>"></option>
+          <option value="true" label="<%= __('Selling') %>"></option>
+          <option value="false" label="<%= __('Buying') %>"></option></select
+        ><br />
+        <%= __('Tags') %>:
+        <select id="tags" name="tags" size="10" multiple>
           <% tags.map( tag => { %>
-            <option value="<%= tag %>" label ="<%= tag %>"></option>
-          <% }) %> 
-        </select><br>
-        <input type="submit" value="Search" class="search-button">
+          <option value="<%= tag %>" label="<%= tag %>"></option>
+          <% }) %></select
+        ><br />
+        <input
+          type="submit"
+          value="<%= __('Search') %>"
+          class="search-button"
+        />
       </form>
     </div>
     <% if (Object.keys(products).length === 0) { %>
-      <h1>No products matched your search criteria.</h1>
-      <a href="./">Return</a>
+    <h1><%= __('No products found that match your search criteria') %></h1>
+    <a href="./">Return</a>
     <% } %>
-    <div class = "products-list">
-      <% products.map(product => { %> 
-        <% product = product %> 
-        <% include ./components/product-card.ejs %> 
-      <% }) %>
+    <div class="products-list">
+      <% products.map(product => { %> <% product = product %> <% include
+      ./components/product-card.ejs %> <% }) %>
     </div>
   </body>
 </html>

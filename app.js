@@ -21,19 +21,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//Setup i18n
 
-app.locals.title = 'NodePop'
+const i18n = require('./lib/i18nConfig');
+app.use(i18n.init);
 
-app.use(('/api/products'), require('./routes/api/products'))
+app.locals.title = 'NodePop';
+
+app.use('/api/products', require('./routes/api/products'));
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -41,10 +45,10 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
 
   // Send JSON if request was sent to API
-  if(req.url.includes("/api")){
-    res.status(err.status || 500)
-    res.json({ status: 500, error: err.message })
-  } else{
+  if (req.url.includes('/api')) {
+    res.status(err.status || 500);
+    res.json({ status: 500, error: err.message });
+  } else {
     res.render('error');
   }
 });

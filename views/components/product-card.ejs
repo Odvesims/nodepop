@@ -1,11 +1,13 @@
 <!-- Component for the products index displaying -->
-<link rel='stylesheet' href='/stylesheets/product-card.css' />
-<div class = "product-item">
-  <div class = "product-name"><%= product.name %></div>
-  <div class = "product-picture">
+<link rel="stylesheet" href="/stylesheets/product-card.css" />
+<div class="product-item">
+  <div class="product-name"><%= product.name %></div>
+  <div class="product-picture">
     <img src="<%= product.picture %>" alt="" />
-    <span class = "for-sale"><%= product.for_sale ? 'Selling' : 'Buying' %></span>
+    <span class="for-sale"
+      ><%= product.for_sale ? __('Selling') : __('Buying') %></span
+    >
   </div>
-  <div class = "product-price"><%= product.price %></div>
-  <div class = "product-tags">tags: <%= product.tags %></div>
-</div>   
+  <div class="product-price"><%= product.price %></div>
+  <div class="product-tags">tags: <%= product.tags %></div>
+</div>
