@@ -7,5 +7,12 @@
 	"Selling": "Selling",
 	"Buying": "Buying",
 	"Tags": "Tags",
-	"Search": "Search"
+	"Search": "Search",
+	"errors": {
+		"User credentials are not valid": "User credentials are not valid"
+	},
+	"Sign in to": "Sign in to",
+	"Email address": "Email address",
+	"Password": "Password",
+	"Submit": "Submit"
 }

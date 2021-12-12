@@ -1,0 +1,46 @@
+<% include navBar.html %>
+<% const productsSell = await Product.productsList({for_sale: true}, skip, limit, select, sort).count %>
+<% const productsBuy = await Product.productsList({for_sale: false}, skip, limit, select, sort).count %>
+<body>
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-2 mt-4">
+          <div class="inforide">
+            <div class="row">
+              <div class="col-lg-3 col-md-4 col-sm-4 col-4 bg-success">
+              </div>
+              <div class="col-lg-9 col-md-8 col-sm-8 col-8 fontsty">
+                  <h4><%= __('Posted Products') %></h4>
+                  <h2><%= productsSell + productsBuy %>></h2>
+              </div>
+            </div>
+          </div>
+      </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-2 mt-4">
+            <div class="inforide">
+              <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-4 bg-primary">
+                </div>
+                <div class="col-lg-9 col-md-8 col-sm-8 col-8 fontsty">
+                    <h4><%= __('Items for Sale') %></h4>
+                    <h2><%= productsSell %>></h2>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-2 mt-4">
+            <div class="inforide">
+              <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-4 bg-info">
+                </div>
+                <div class="col-lg-9 col-md-8 col-sm-8 col-8 fontsty">
+                    <h4><%= __('Items to Buy') %></h4>
+                    <h2><%= productsBuy %></h2>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</body>
