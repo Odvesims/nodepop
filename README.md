@@ -42,3 +42,27 @@ PUT: Para actualizar un producto existente. Necesitamos el id del producto.
 DELETE: Para eliminar un producto existente. Necesitamos el id del producto.
 
 También podemos hacer un GET request a la ruta api/products/tags para ver un listado de todas las tags que estén presentes en los productos de la DB.
+
+# Node Avanzado
+
+### AUTENTICACION API
+
+Se implementó autenticación del API usando JWT. La siguiente ruta sirven para abrir una sesión autenticada de un usuario que consume nuestro API:
+
+- /api/login (email y password como parámetros. Devuelve un TOKEN que usamos para realizar peticiones al API y que nuestra sesión sea válida).
+
+Las peticiones a nuestro API están protegidas por JWT por lo tanto, en lo adelante, ninguna petición al API de una sesión no autenticada podrá consumir recursos del mismo. Deben usarse un parámetro TOKEN o un header Authorization con el valor del token para que la sesión sea válida.
+
+### INTERNACIONALIZACION
+
+El APP ha sido internazionalizada! Podemos visualizar las páginas en múltiples lenguages (Actualmente inglés y español). Desde el navbar podemos alternar entre los idiomas disponibles.
+
+### MICROSERVICIO
+
+El microservicio thumbnailGenerator reacciona a la creación de un producto desde el API y genera un thumbnail 250x250 para cada imagen que sea subida al app.
+
+# TODO
+
+- Autenticar la Web App.
+- Mejorar el microservicio.
+- Mejoras de UI/UX.
